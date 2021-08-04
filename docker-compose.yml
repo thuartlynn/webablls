@@ -1,0 +1,65 @@
+version: "3.7"
+
+services:
+  mariadb:
+    image: ${DATABASE}
+    container_name: Webablls_Mariadb
+    restart: always
+    user: ${CURRENT_UID}
+    environment:
+        MYSQL_ROOT_PASSWORD: tismfp2
+    ports:
+        - "3306:3306"
+    volumes:
+        - "./database:/var/lib/mysql"
+        - "./mariadb/my.cnf:/etc/mysql/my.cnf"
+        - "./mariadb/localtime:/etc/localtime"
+        - "./mariadb/Initial.sh:/home/Initial.sh"
+  adminer:
+     image: adminer
+     container_name: Webablls_Adminer
+     restart: always
+     user: ${CURRENT_UID}     
+     ports:
+        - 8080:8080
+     volumes: 
+        - "./mariadb/localtime:/etc/localtime"   
+     links:
+        - mariadb        
+  nginx:
+    image: ${NGINX_IMAGE}
+    container_name: Webablls_Nginx
+    restart: always
+    ports:
+        - "80:80"        
+    links:
+        - phpfpm
+    volumes:
+        - "./nginx/default.conf:/etc/nginx/conf.d/default.conf"
+        - "./nginx/localtime:/etc/localtime"
+        - ".${WORK_DIR}:${WORK_DIR}"
+        - "./log/nginx:/var/log/nginx"    
+  nodejs:
+    image: ${NODEJS_IMAGE}
+    restart: always
+    container_name: Webablls_NodeJs
+    user: ${CURRENT_UID}
+    volumes:
+         - ".${WORK_DIR}:${WORK_DIR}"  
+    working_dir: ${WORK_DIR}      
+    stdin_open: true
+    tty: true         
+  phpfpm:
+    image: ${PHP_IMAGE}
+    container_name: Webablls_PHP
+    restart: always
+    user: ${CURRENT_UID}
+    working_dir: ${WORK_DIR}
+    links:
+        - mariadb
+    volumes:
+        - "./phpfpm/www.conf:/usr/local/etc/php-fpm.d/www.conf"
+        - "./phpfpm/php.ini:/usr/local/etc/php/php.ini"
+        - ".${WORK_DIR}:${WORK_DIR}"
+        - "./log/php:/var/log/"
+        - "./phpfpm/Initial.sh:/home/Initial.sh"

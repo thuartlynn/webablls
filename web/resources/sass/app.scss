@@ -1,0 +1,55 @@
+// 引進 css 
+@import "~bootstrap/dist/css/bootstrap.min.css";
+
+@import "./style.css";
+
+@import "./indexstyle.css";
+
+// 修改 原boostrap css
+
+.navbar-dark .navbar-nav .nav-link {
+  color: rgba(255,255,255,1);
+}
+
+.navbar-dark .navbar-toggler-icon {
+    background-image: url(/images/bars-solid.svg);
+    border: none;
+  }
+  
+.navbar-dark .navbar-toggler {
+    color: rgba(255,255,255,1);
+    border: none;
+  }
+
+.navbar-light .navbar-toggler {
+    border-color: none;
+}
+
+.breadcrumb {
+  background-color: #efeeef;
+}
+
+.form-control::-webkit-input-placeholder {
+  color: #6c757d;
+  opacity: .5;
+}
+
+.form-control::-moz-placeholder {
+  color: #6c757d;
+  opacity: .5;
+}
+
+.form-control:-ms-input-placeholder {
+  color: #6c757d;
+  opacity: .5;
+}
+
+.form-control::-ms-input-placeholder {
+  color: #6c757d;
+  opacity: .5;
+}
+
+.form-control::placeholder {
+  color: #6c757d;
+  opacity: .5;
+}

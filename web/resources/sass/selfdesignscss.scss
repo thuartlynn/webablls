@@ -1,0 +1,85 @@
+// test SCSS寫法
+@import "~bootstrap/dist/css/bootstrap-grid.css";
+
+$btnFont-m: 1rem;
+$btnFont-l: $btnFont-m * 1.2;
+$btnFont-s: $btnFont-m * 0.8;
+$btnColor: rgb(233,233,233);
+$btnBgColor: #F10F98;
+$btnHover: darken($btnBgColor, 10%) ;
+
+@mixin inlineblock() {
+  display: inline-block;
+}
+
+@function divide($x, $y) {
+  @return $x / $y;
+}
+
+@mixin circle($size, $bgcolor) {
+  border-radius: 50%;
+  height: $size;
+  width: $size;
+  font-size: $btnFont-s;
+  background: $bgcolor;
+}
+
+@mixin BG01($background) {
+  background-image: url(#{$background});
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-position: center center;
+  background-size: cover;
+  height: 500px;
+  width: 100vw;
+  top: 0px;
+}
+
+%title{
+  line-height:1.8;
+  border: 3px solid #000;
+  padding: 10px;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sidebar h2{
+  @extend %title;
+}
+.test1 h4{
+  @extend %title;
+}
+.test2 h3{
+  @extend %title;
+}
+
+.box {
+  @include circle(27px, #DB0E8A);
+}
+
+.testbtn {
+  font-size: $btnFont-l;
+  text-decoration: none;
+  color: $btnColor;
+  @include inlineblock;
+  text-align: center;
+  padding: 15px 40px;
+  border-radius: 5px;
+  background-color: $btnBgColor;
+
+  &:hover {
+    background-color: $btnHover;
+  }
+}
+
+nav {
+  margin: divide(1000,7) * 1px;
+ }
+
+.BG01 {
+  @include BG01("/images/internet-01.jpg");
+}
